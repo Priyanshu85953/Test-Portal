@@ -1,69 +1,83 @@
 document.addEventListener('DOMContentLoaded', function () {
     let currentSection = "phySec1"; // Default section
+    let quizSubmitted = false; // Track whether the quiz has been submitted
 
     const sectionData = {
         phySec1: [
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/1.jpeg?alt=media&token=22c8dce8-b8fc-4b82-8ea3-e550d875c8e1",
-                options: ["Option 1", "Option 2", "Option 3", "Option 4"]
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 2" // Example correct answer
             },
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/2.jpeg?alt=media&token=6a76bc40-7fa0-44c6-8ea6-0a47811a9921",
-                options: ["Option A", "Option B", "Option C", "Option D"]
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option A"
             },
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/3.jpeg?alt=media&token=b5f69f4a-aa01-496e-9adb-82cc2599d425",
-                options: ["Option X", "Option Y", "Option Z", "Option W"]
+                options: ["Option X", "Option Y", "Option Z", "Option W"],
+                correctAnswer: "Option Z"
             }
         ],
         phySec2: [
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/physec2-1.jpeg?alt=media&token=sampleToken1",
-                options: ["Option 1", "Option 2", "Option 3", "Option 4"]
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 3"
             },
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/physec2-2.jpeg?alt=media&token=sampleToken2",
-                options: ["Option A", "Option B", "Option C", "Option D"]
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option D"
             }
         ],
         chemSec1: [
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/chemsec1-1.jpeg?alt=media&token=sampleToken3",
-                options: ["Option 1", "Option 2", "Option 3", "Option 4"]
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 1"
             },
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/chemsec1-2.jpeg?alt=media&token=sampleToken4",
-                options: ["Option A", "Option B", "Option C", "Option D"]
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option C"
             }
         ],
         chemSec2: [
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/chemsec2-1.jpeg?alt=media&token=sampleToken5",
-                options: ["Option 1", "Option 2", "Option 3", "Option 4"]
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 2"
             },
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/chemsec2-2.jpeg?alt=media&token=sampleToken6",
-                options: ["Option A", "Option B", "Option C", "Option D"]
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option B"
             }
         ],
         mathsSec1: [
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/mathssec1-1.jpeg?alt=media&token=sampleToken7",
-                options: ["Option 1", "Option 2", "Option 3", "Option 4"]
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 4"
             },
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/mathssec1-2.jpeg?alt=media&token=sampleToken8",
-                options: ["Option A", "Option B", "Option C", "Option D"]
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option B"
             }
         ],
         mathsSec2: [
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/mathssec2-1.jpeg?alt=media&token=sampleToken9",
-                options: ["Option 1", "Option 2", "Option 3", "Option 4"]
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 1"
             },
             {
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/mathssec2-2.jpeg?alt=media&token=sampleToken10",
-                options: ["Option A", "Option B", "Option C", "Option D"]
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option D"
             }
         ]
     };
@@ -83,11 +97,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const saveAndNextButton = document.getElementById('next');
     const clearResponseButton = document.getElementById('cr');
     const previousButton = document.getElementById('previous');
+    const submitButton = document.getElementById('submit'); // Assuming there's a submit button
 
     saveButton.addEventListener('click', saveCurrentQuestion);
     saveAndNextButton.addEventListener('click', saveAndNextQuestion);
     clearResponseButton.addEventListener('click', clearResponse);
     previousButton.addEventListener('click', goToPreviousQuestion);
+    submitButton.addEventListener('click', submitQuiz);
 
     function saveCurrentQuestion() {
         const selectedOption = document.querySelector(`input[name="option${sectionQuestionIndex[currentSection]}"]:checked`);
@@ -109,6 +125,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentIndex < sectionData[currentSection].length - 1) {
             sectionQuestionIndex[currentSection]++;
             updateQuestionDisplay();
+        } else {
+            const nextSection = getNextSection();
+            if (nextSection) {
+                switchSection(nextSection);
+            }
         }
     }
 
@@ -155,6 +176,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
+        if (quizSubmitted) {
+            showResults(); // Show results when navigating after submission
+        }
+
         updatePaletteItems();
     }
 
@@ -166,6 +191,15 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             console.error("Section not found: " + section);
         }
+    }
+
+    function getNextSection() {
+        const sectionNames = ["phySec1", "phySec2", "chemSec1", "chemSec2", "mathsSec1", "mathsSec2"];
+        const currentIndex = sectionNames.indexOf(currentSection);
+        if (currentIndex < sectionNames.length - 1) {
+            return sectionNames[currentIndex + 1];
+        }
+        return null;
     }
 
     function updatePaletteItems() {
@@ -187,7 +221,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Function to update the colors of the sections
     function updateSectionColors() {
         const sections = document.querySelectorAll('.section_unselected, .section_selected');
 
@@ -204,6 +237,80 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function showResults() {
+        const currentQuestionData = sectionData[currentSection][sectionQuestionIndex[currentSection]];
+        const correctAnswer = currentQuestionData.correctAnswer;
+
+        const options = document.querySelectorAll(`input[name="option${sectionQuestionIndex[currentSection]}"]`);
+
+        options.forEach(option => {
+            const parentLabel = option.parentElement;
+            if (option.value === correctAnswer) {
+                parentLabel.style.border = "2px solid green"; // Correct answer in green
+            } else if (option.checked) {
+                parentLabel.style.border = "2px solid red"; // Incorrect answer in red
+            }
+        });
+    }
+
+    function calculateMarks() {
+        let totalMarks = 0;
+        let sectionMarks = {};
+
+        Object.keys(sectionData).forEach(section => {
+            let sectionTotal = 0;
+            sectionData[section].forEach((question, index) => {
+                const correctAnswer = question.correctAnswer;
+                const userAnswer = selectedAnswers[section] ? selectedAnswers[section][index] : null;
+                if (userAnswer === correctAnswer) {
+                    sectionTotal += 4;
+                } else if (userAnswer) {
+                    sectionTotal -= 1;
+                }
+            });
+            sectionMarks[section] = sectionTotal;
+            totalMarks += sectionTotal;
+        });
+
+        return { totalMarks, sectionMarks };
+    }
+
+    function submitQuiz() {
+        quizSubmitted = true;
+        showResults(); // Show results for the current question
+    
+        // Calculate and show final marks and section-wise marks
+        const { totalMarks, sectionMarks } = calculateMarks();
+        let message = `Quiz submitted! Your final score is ${totalMarks} marks.\n\nSection-wise marks:\n`;
+        for (const section in sectionMarks) {
+            message += `${section}: ${sectionMarks[section]} marks\n`;
+        }
+    
+        // Display the result in an alert
+        alert(message);
+    
+        // Send the email using Google Apps Script
+        fetch('https://script.google.com/macros/s/AKfycbzfWTCBjjdCTV-_LiX-zkA7aznK6JygS5zGIbnL3qHgNXrRkrE5DO0wX8iz0o0lh13R/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                subject: 'Quiz Scorecard',
+                message: message
+            })
+        }).then(response => {
+            if (response.ok) {
+                console.log('Email sent successfully');
+            } else {
+                console.error('Error sending email');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    
+
     // Add click event listeners for the sections
     document.querySelectorAll('.section_unselected, .section_selected').forEach((element, index) => {
         const sectionNames = ["phySec1", "phySec2", "chemSec1", "chemSec2", "mathsSec1", "mathsSec2"];
@@ -216,3 +323,4 @@ document.addEventListener('DOMContentLoaded', function () {
     updatePaletteItems();
     updateSectionColors(); // Initialize colors
 });
+
