@@ -289,26 +289,25 @@ document.addEventListener('DOMContentLoaded', function () {
         // Display the result in an alert
         alert(message);
     
-        // Send the email using Google Apps Script
-        fetch('https://script.google.com/macros/s/AKfycbzfWTCBjjdCTV-_LiX-zkA7aznK6JygS5zGIbnL3qHgNXrRkrE5DO0wX8iz0o0lh13R/exec', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                subject: 'Quiz Scorecard',
-                message: message
-            })
-        }).then(response => {
-            if (response.ok) {
-                console.log('Email sent successfully');
-            } else {
-                console.error('Error sending email');
-            }
-        }).catch(error => {
-            console.error('Error:', error);
-        });
+        // Send the email using SMTPJS
+        Email.send({
+            Host: "smtp.elasticemail.com", // Elastic Email SMTP server
+            Username: "psych9841@gmail.com", // Your verified sender email
+            Password: "C07B6B20BF9B3C1096426FD395B00464119E", // The API token you obtained
+            To: "psych9841@gmail.com", // The recipient email address
+            From: "psych9841@gmail.com", // Must be the same as your verified sender
+            Subject: "Test Email",
+            Body: message
+         })
+         .then(function(message){
+             alert("Email sent successfully!");
+         })
+         .catch(function(error){
+             console.error("Error sending email:", error);
+         });
+         
     }
+    
     
 
     // Add click event listeners for the sections
