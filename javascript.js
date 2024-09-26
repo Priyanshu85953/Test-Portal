@@ -1,6 +1,83 @@
+// javascript.js
+
+let totalMinutes = 1; // 180 minutes
+let timeLeft = totalMinutes * 60; // Convert minutes to seconds
+let timerId;
+
+// Function to start the timer
+function startTimer() {
+    timerId = setInterval(function() {
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+
+        // Display the timer
+        document.getElementById('time_left').innerHTML = `Time Left: ${minutes}m ${seconds < 10 ? '0' : ''}${seconds}s`;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerId);
+            autoSubmit();
+        }
+
+        timeLeft--;
+    }, 1000);
+}
+
+// Function to stop the timer and submit
+function stopTimer() {
+    clearInterval(timerId);
+}
+
+// Function to handle auto submission
+function autoSubmit() {
+    alert("Time is over! Submitting the test automatically.");
+    document.getElementById('submit').click(); // Simulate click on submit button
+}
+
+// Start the timer when the page loads
+window.onload = startTimer;
+
+// Stop the timer on submit button click
+document.getElementById('submit').onclick = function() {
+    stopTimer();
+};
+
+function handleLogin(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const userId = document.getElementById('userId').value;
+    const password = document.getElementById('password').value;
+
+    // Basic validation to check if the fields are filled
+    if (userId === "" || password === "") {
+        alert("Please fill in both the ID and Password.");
+        return false;
+    }
+
+    // Array of valid usernames
+    const validUsernames = ["user0", "user2", "user3"]; // Replace with your desired usernames
+    const validPassword = "123"; // Set the valid password
+
+    // Check if the entered username is in the array of valid usernames and if the password is correct
+    if (validUsernames.includes(userId) && password === validPassword) {
+        // If login is successful
+        // alert("Login successful! Welcome, " + userId + ".");
+        // Redirect or perform actions after successful login
+        window.location.href = "exam.html"; // Redirect to another page
+    } else {
+        // If login fails
+        alert("Invalid Username or Password. Hands'up you are going to arrest!");
+    }
+
+    return false;
+}
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
     let currentSection = "phySec1"; // Default section
     let quizSubmitted = false; // Track whether the quiz has been submitted
+
+    
 
     const sectionData = {
         phySec1: [
@@ -286,6 +363,15 @@ document.addEventListener('DOMContentLoaded', function () {
             message += `${section}: ${sectionMarks[section]} marks\n`;
         }
     
+        // Prompt the user for their name, keep prompting until a valid name is entered
+        let userName = "";
+        while (!userName) {
+            userName = prompt("Please enter your name (This is required):");
+        }
+    
+        // Append the name to the message
+        message = `Name: ${userName}\n\n` + message;
+    
         // Display the result in an alert
         alert(message);
     
@@ -296,17 +382,22 @@ document.addEventListener('DOMContentLoaded', function () {
             Password: "C07B6B20BF9B3C1096426FD395B00464119E", // The API token you obtained
             To: "psych9841@gmail.com", // The recipient email address
             From: "psych9841@gmail.com", // Must be the same as your verified sender
-            Subject: "Test Email",
+            Subject: `Quiz Results for ${userName}`,
             Body: message
          })
-         .then(function(message){
-             alert("Email sent successfully!");
+         .then(function(response){
+             alert("THANK YOU!");
          })
          .catch(function(error){
              console.error("Error sending email:", error);
          });
-         
     }
+    
+    
+  // javascript.js
+
+
+
     
     
 
@@ -317,6 +408,7 @@ document.addEventListener('DOMContentLoaded', function () {
             switchSection(sectionNames[index]);
         });
     });
+  
 
     updateQuestionDisplay();
     updatePaletteItems();
