@@ -38,22 +38,6 @@
         </div>
     </div>
 
-    <script>
-        function handleLogin(event) {
-            event.preventDefault();  // Prevent the form from submitting
-
-            // Add your validation logic here, if needed
-            const userId = document.getElementById('userId').value;
-            const password = document.getElementById('password').value;
-
-            // Example validation (you can adjust this as needed)
-            if (userId && password) {
-                // Redirect to the exam page if validation passes
-                window.location.href = "exam.html";
-            } else {
-                alert('Please enter both ID and password');
-            }
-        }
-    </script>
+    <script type="text/javascript" src="javascript.js"></script>
 </body>
 </html>
