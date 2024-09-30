@@ -1,6 +1,6 @@
 // javascript.js
 
-let totalMinutes = 1; // 180 minutes
+let totalMinutes = 10; // 180 minutes
 let timeLeft = totalMinutes * 60; // Convert minutes to seconds
 let timerId;
 
@@ -41,6 +41,7 @@ document.getElementById('submit').onclick = function() {
     stopTimer();
 };
 
+// Login handler (assuming there's a login form)
 function handleLogin(event) {
     event.preventDefault(); // Prevent form submission
 
@@ -53,31 +54,28 @@ function handleLogin(event) {
         return false;
     }
 
-    // Array of valid usernames
-    const validUsernames = ["user0", "user2", "user3"]; // Replace with your desired usernames
-    const validPassword = "123"; // Set the valid password
+    // Object with valid usernames and their respective passwords
+    const validCredentials = {
+        "jee01": "123",
+        "jee02": "124",
+        "jee03": "125"
+    };
 
-    // Check if the entered username is in the array of valid usernames and if the password is correct
-    if (validUsernames.includes(userId) && password === validPassword) {
+    // Check if the entered username exists in the object and if the password matches
+    if (validCredentials[userId] && validCredentials[userId] === password) {
         // If login is successful
-        // alert("Login successful! Welcome, " + userId + ".");
-        // Redirect or perform actions after successful login
         window.location.href = "exam.html"; // Redirect to another page
     } else {
         // If login fails
-        alert("Invalid Username or Password. Hands'up you are going to arrest!");
+        alert("Invalid Username or Password. Hands' up, you are going to be arrested!");
     }
 
     return false;
 }
 
-
-
 document.addEventListener('DOMContentLoaded', function () {
     let currentSection = "phySec1"; // Default section
     let quizSubmitted = false; // Track whether the quiz has been submitted
-
-    
 
     const sectionData = {
         phySec1: [
@@ -169,27 +167,56 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const selectedAnswers = {};
+    const markedForReview = {}; // New object to track marked for review
 
     const saveButton = document.getElementById('favourite');
     const saveAndNextButton = document.getElementById('next');
+    const markforreviewAndNextButton = document.getElementById('mfran');
     const clearResponseButton = document.getElementById('cr');
     const previousButton = document.getElementById('previous');
     const submitButton = document.getElementById('submit'); // Assuming there's a submit button
 
     saveButton.addEventListener('click', saveCurrentQuestion);
     saveAndNextButton.addEventListener('click', saveAndNextQuestion);
+    markforreviewAndNextButton.addEventListener('click', markforreviewAndNextQuestion);
     clearResponseButton.addEventListener('click', clearResponse);
     previousButton.addEventListener('click', goToPreviousQuestion);
     submitButton.addEventListener('click', submitQuiz);
 
     function saveCurrentQuestion() {
         const selectedOption = document.querySelector(`input[name="option${sectionQuestionIndex[currentSection]}"]:checked`);
+        
         if (selectedOption) {
+            // Save the selected answer
             if (!selectedAnswers[currentSection]) {
                 selectedAnswers[currentSection] = {};
             }
             selectedAnswers[currentSection][sectionQuestionIndex[currentSection]] = selectedOption.value;
+        } else {
+            // If no option is selected, mark it as unanswered
+            if (selectedAnswers[currentSection]) {
+                selectedAnswers[currentSection][sectionQuestionIndex[currentSection]] = null; // Clear any previous answer
+            }
         }
+        
+        // Update the palette items after saving
+        updatePaletteItems();
+    }
+
+    function markforreviewAndNextQuestion() {
+        saveCurrentQuestion();
+        
+        // Initialize the review tracking for the current section if not already done
+        if (!markedForReview[currentSection]) {
+            markedForReview[currentSection] = {};
+        }
+        
+        // Set the current question as marked for review
+        markedForReview[currentSection][sectionQuestionIndex[currentSection]] = true;
+        
+        updatePaletteItems(); // Update the palette to reflect the change
+        
+        goToNextQuestion();
     }
 
     function saveAndNextQuestion() {
@@ -202,6 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentIndex < sectionData[currentSection].length - 1) {
             sectionQuestionIndex[currentSection]++;
             updateQuestionDisplay();
+            updatePaletteItems(); // Update palette colors
         } else {
             const nextSection = getNextSection();
             if (nextSection) {
@@ -215,16 +243,22 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentIndex > 0) {
             sectionQuestionIndex[currentSection]--;
             updateQuestionDisplay();
+            updatePaletteItems(); // Update palette colors
         }
     }
 
     function clearResponse() {
+        // Clear selected option for the current question
         document.querySelectorAll(`input[name="option${sectionQuestionIndex[currentSection]}"]`).forEach(input => {
-            input.checked = false;
+            input.checked = false; // Uncheck the radio buttons
         });
+        
         if (selectedAnswers[currentSection]) {
-            selectedAnswers[currentSection][sectionQuestionIndex[currentSection]] = null;
+            selectedAnswers[currentSection][sectionQuestionIndex[currentSection]] = null; // Clear the selected answer
         }
+        
+        // Update the palette items to reflect the cleared state
+        updatePaletteItems();
     }
 
     function updateQuestionDisplay() {
@@ -281,19 +315,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updatePaletteItems() {
         const paletteList = document.getElementById('palette-list');
-        paletteList.innerHTML = "";
-
+        paletteList.innerHTML = ""; // Clear existing palette items
+    
         sectionData[currentSection].forEach((_, index) => {
             const paletteItem = document.createElement('div');
             paletteItem.className = 'nv item';
             paletteItem.id = `btn${index + 1}`;
             paletteItem.textContent = index + 1;
-
+    
+            const isAnswered = selectedAnswers[currentSection] && selectedAnswers[currentSection][index] !== undefined && selectedAnswers[currentSection][index] !== null;
+            const isMarkedForReview = markedForReview[currentSection] && markedForReview[currentSection][index];
+    
+            // Determine the color of the palette item
+            if (isMarkedForReview) {
+                if (isAnswered) {
+                    // Mix of blue and green (e.g., teal)
+                    paletteItem.style.backgroundColor = 'purple';
+                } else {
+                    // Blue for marked for review without an answer
+                    paletteItem.style.backgroundColor = '#4B0082';
+                }
+            } else {
+                if (isAnswered) {
+                    // Green for answered
+                    paletteItem.style.backgroundColor = 'green';
+                } else if (selectedAnswers[currentSection] && selectedAnswers[currentSection][index] === null) {
+                    // Red for visited but unanswered
+                    paletteItem.style.backgroundColor = 'red';
+                } else {
+                    // No color for not visited
+                    paletteItem.style.backgroundColor = '';
+                }
+            }
+    
             paletteItem.addEventListener('click', () => {
                 sectionQuestionIndex[currentSection] = index;
                 updateQuestionDisplay();
             });
-
+    
             paletteList.appendChild(paletteItem);
         });
     }
@@ -392,14 +451,6 @@ document.addEventListener('DOMContentLoaded', function () {
              console.error("Error sending email:", error);
          });
     }
-    
-    
-  // javascript.js
-
-
-
-    
-    
 
     // Add click event listeners for the sections
     document.querySelectorAll('.section_unselected, .section_selected').forEach((element, index) => {
@@ -408,10 +459,8 @@ document.addEventListener('DOMContentLoaded', function () {
             switchSection(sectionNames[index]);
         });
     });
-  
 
     updateQuestionDisplay();
     updatePaletteItems();
     updateSectionColors(); // Initialize colors
 });
-
