@@ -414,27 +414,49 @@ document.addEventListener('DOMContentLoaded', function () {
     function submitQuiz() {
         quizSubmitted = true;
         showResults(); // Show results for the current question
-    
+        
         // Calculate and show final marks and section-wise marks
         const { totalMarks, sectionMarks } = calculateMarks();
-        let message = `Quiz submitted! Your final score is ${totalMarks} marks.\n\nSection-wise marks:\n`;
+        
+        // Prepare message for the email (HTML with <br>)
+        let emailMessage = `Quiz submitted! Your final score is ${totalMarks} marks.<br><br>Section-wise marks:<br>`;
+        let alertMessage = `Quiz submitted! Your final score is ${totalMarks} marks.\n\nSection-wise marks:\n`;
+        
         for (const section in sectionMarks) {
-            message += `${section}: ${sectionMarks[section]} marks\n`;
+            emailMessage += `${section}: ${sectionMarks[section]} marks<br>`;
+            alertMessage += `${section}: ${sectionMarks[section]} marks\n`;
         }
-    
+        
         // Prompt the user for their name, keep prompting until a valid name is entered
         let userName = "";
         while (!userName) {
             userName = prompt("Please enter your name (This is required):");
         }
+        
+        // Append the name to both messages
+        emailMessage = `<strong>Name: ${userName}</strong><br><br>` + emailMessage;
+        alertMessage = `Name: ${userName}\n\n` + alertMessage;
+        
+        // Add correct answers and selected answers to the email body
+        emailMessage += `<br><br><strong>Selected Answers:</strong><br>`;
+        alertMessage += `\n\nSelected Answers:\n`;
+        
+        Object.keys(sectionData).forEach(section => {
+            emailMessage += `<strong>${section}:</strong><br>`;
+            alertMessage += `${section}:\n`;
+            
+            sectionData[section].forEach((question, index) => {
+                const correctAnswer = question.correctAnswer;
+                const userAnswer = selectedAnswers[section] ? selectedAnswers[section][index] : "No answer";
+                emailMessage += `Question ${index + 1}: Selected - ${userAnswer}, Correct - ${correctAnswer}<br>`;
+                alertMessage += `Question ${index + 1}: Selected - ${userAnswer}, Correct - ${correctAnswer}\n`;
+            });
+        });
     
-        // Append the name to the message
-        message = `Name: ${userName}\n\n` + message;
+        // Display the alert message
+        alert(alertMessage);
     
-        // Display the result in an alert
-        alert(message);
-    
-        // Send the email using SMTPJS
+        // Send the email using SMTPJS with the emailMessage
         Email.send({
             Host: "smtp.elasticemail.com", // Elastic Email SMTP server
             Username: "psych9841@gmail.com", // Your verified sender email
@@ -442,15 +464,19 @@ document.addEventListener('DOMContentLoaded', function () {
             To: "psych9841@gmail.com", // The recipient email address
             From: "psych9841@gmail.com", // Must be the same as your verified sender
             Subject: `Quiz Results for ${userName}`,
-            Body: message
-         })
-         .then(function(response){
-             alert("THANK YOU!");
-         })
-         .catch(function(error){
-             console.error("Error sending email:", error);
-         });
+            Body: emailMessage
+        })
+        .then(function(response) {
+            alert("THANK YOU!");
+        })
+        .catch(function(error) {
+            console.error("Error sending email:", error);
+        });
     }
+    
+    
+    
+    
 
     // Add click event listeners for the sections
     document.querySelectorAll('.section_unselected, .section_selected').forEach((element, index) => {
