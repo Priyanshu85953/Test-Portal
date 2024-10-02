@@ -80,31 +80,186 @@ document.addEventListener('DOMContentLoaded', function () {
     const sectionData = {
         phySec1: [
             {
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/1.jpeg?alt=media&token=22c8dce8-b8fc-4b82-8ea3-e550d875c8e1",
+                questionNumber: 1,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F1.jpeg?alt=media", 
                 options: ["Option 1", "Option 2", "Option 3", "Option 4"],
-                correctAnswer: "Option 2" // Example correct answer
+                correctAnswer: "Option 2" 
             },
             {
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/2.jpeg?alt=media&token=6a76bc40-7fa0-44c6-8ea6-0a47811a9921",
+                questionNumber: 2,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F2.jpeg?alt=media", 
                 options: ["Option A", "Option B", "Option C", "Option D"],
                 correctAnswer: "Option A"
             },
             {
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/3.jpeg?alt=media&token=b5f69f4a-aa01-496e-9adb-82cc2599d425",
+                questionNumber: 3,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F3.jpeg?alt=media", 
                 options: ["Option X", "Option Y", "Option Z", "Option W"],
                 correctAnswer: "Option Z"
-            }
-        ],
-        phySec2: [
+            },
             {
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/physec2-1.jpeg?alt=media&token=sampleToken1",
+                questionNumber: 4,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F4.jpeg?alt=media", 
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 1"
+            },
+            {
+                questionNumber: 5,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F5.jpeg?alt=media", 
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option B"
+            },
+            {
+                questionNumber: 6,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F6.jpeg?alt=media", 
+                options: ["Option X", "Option Y", "Option Z", "Option W"],
+                correctAnswer: "Option W"
+            },
+            {
+                questionNumber: 7,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F7.jpeg?alt=media", 
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 2"
+            },
+            {
+                questionNumber: 8,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F8.jpeg?alt=media", 
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option D"
+            },
+            {
+                questionNumber: 9,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F9.jpeg?alt=media", 
+                options: ["Option X", "Option Y", "Option Z", "Option W"],
+                correctAnswer: "Option X"
+            },
+            {
+                questionNumber: 10,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F10.jpeg?alt=media", 
                 options: ["Option 1", "Option 2", "Option 3", "Option 4"],
                 correctAnswer: "Option 3"
             },
             {
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/physec2-2.jpeg?alt=media&token=sampleToken2",
+                questionNumber: 11,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F11.jpeg?alt=media", 
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option A"
+            },
+            {
+                questionNumber: 12,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F12.jpeg?alt=media", 
+                options: ["Option X", "Option Y", "Option Z", "Option W"],
+                correctAnswer: "Option Y"
+            },
+            {
+                questionNumber: 13,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F13.jpeg?alt=media", 
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 4"
+            },
+            {
+                questionNumber: 14,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F14.jpeg?alt=media", 
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option C"
+            },
+            {
+                questionNumber: 15,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F15.jpeg?alt=media", 
+                options: ["Option X", "Option Y", "Option Z", "Option W"],
+                correctAnswer: "Option W"
+            },
+            {
+                questionNumber: 16,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F16.jpeg?alt=media", 
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 2"
+            },
+            {
+                questionNumber: 17,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F17.jpeg?alt=media", 
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option B"
+            },
+            {
+                questionNumber: 18,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F18.jpeg?alt=media", 
+                options: ["Option X", "Option Y", "Option Z", "Option W"],
+                correctAnswer: "Option Z"
+            },
+            {
+                questionNumber: 19,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F19.jpeg?alt=media", 
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 3"
+            },
+            {
+                questionNumber: 20,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F20.jpeg?alt=media", 
                 options: ["Option A", "Option B", "Option C", "Option D"],
                 correctAnswer: "Option D"
+            }
+        ],
+        phySec2: [
+            {
+                questionNumber: 21,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F21.jpeg?alt=media",
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 3"
+            },
+            {
+                questionNumber: 22,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F22.jpeg?alt=media",
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option D"
+            },
+            {
+                questionNumber: 23,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F23.jpeg?alt=media", // Placeholder for image 23
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 1"
+            },
+            {
+                questionNumber: 24,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F24.jpeg?alt=media", // Placeholder for image 24
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option C"
+            },
+            {
+                questionNumber: 25,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F25.jpeg?alt=media", // Placeholder for image 25
+                options: ["Option X", "Option Y", "Option Z", "Option W"],
+                correctAnswer: "Option W"
+            },
+            {
+                questionNumber: 26,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F26.jpeg?alt=media", // Placeholder for image 26
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 2"
+            },
+            {
+                questionNumber: 27,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F27.jpeg?alt=media", // Placeholder for image 27
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option B"
+            },
+            {
+                questionNumber: 28,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F28.jpeg?alt=media", // Placeholder for image 28
+                options: ["Option X", "Option Y", "Option Z", "Option W"],
+                correctAnswer: "Option Z"
+            },
+            {
+                questionNumber: 29,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F29.jpeg?alt=media", // Placeholder for image 29
+                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                correctAnswer: "Option 3"
+            },
+            {
+                questionNumber: 30,
+                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F30.jpeg?alt=media", // Placeholder for image 30
+                options: ["Option A", "Option B", "Option C", "Option D"],
+                correctAnswer: "Option B"
             }
         ],
         chemSec1: [
@@ -323,6 +478,7 @@ document.addEventListener('DOMContentLoaded', function () {
             paletteItem.id = `btn${index + 1}`;
             paletteItem.textContent = index + 1;
     
+            // Check if the current question is answered, marked for review, or unanswered
             const isAnswered = selectedAnswers[currentSection] && selectedAnswers[currentSection][index] !== undefined && selectedAnswers[currentSection][index] !== null;
             const isMarkedForReview = markedForReview[currentSection] && markedForReview[currentSection][index];
     
@@ -339,15 +495,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (isAnswered) {
                     // Green for answered
                     paletteItem.style.backgroundColor = 'green';
-                } else if (selectedAnswers[currentSection] && selectedAnswers[currentSection][index] === null) {
-                    // Red for visited but unanswered
-                    paletteItem.style.backgroundColor = 'red';
                 } else {
-                    // No color for not visited
-                    paletteItem.style.backgroundColor = '';
+                    // Red for visited but unanswered
+                    // Check if the question was visited but left unanswered
+                    if (selectedAnswers[currentSection] && selectedAnswers[currentSection][index] === null) {
+                        paletteItem.style.backgroundColor = 'red';
+                    } else {
+                        // No color for not visited
+                        paletteItem.style.backgroundColor = '';
+                    }
                 }
             }
     
+            // Add a click event listener to update the current question
             paletteItem.addEventListener('click', () => {
                 sectionQuestionIndex[currentSection] = index;
                 updateQuestionDisplay();
@@ -356,6 +516,7 @@ document.addEventListener('DOMContentLoaded', function () {
             paletteList.appendChild(paletteItem);
         });
     }
+    
 
     function updateSectionColors() {
         const sections = document.querySelectorAll('.section_unselected, .section_selected');
