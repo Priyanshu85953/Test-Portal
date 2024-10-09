@@ -204,8 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 questionNumber: 21,
                 url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/img%2F21.jpeg?alt=media",
-                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
-                correctAnswer: "Option 3"
+                correctAnswer: 42 // Numerical answer
             },
             {
                 questionNumber: 22,
@@ -339,24 +338,31 @@ document.addEventListener('DOMContentLoaded', function () {
     submitButton.addEventListener('click', submitQuiz);
 
     function saveCurrentQuestion() {
-        const selectedOption = document.querySelector(`input[name="option${sectionQuestionIndex[currentSection]}"]:checked`);
-        
-        if (selectedOption) {
-            // Save the selected answer
-            if (!selectedAnswers[currentSection]) {
-                selectedAnswers[currentSection] = {};
+        if (currentSection.includes("Sec2")) {
+            // For Section 2, save numerical answer
+            const numericalAnswer = document.getElementById('numerical-answer').value;
+    
+            if (numericalAnswer) {
+                if (!selectedAnswers[currentSection]) {
+                    selectedAnswers[currentSection] = {};
+                }
+                selectedAnswers[currentSection][sectionQuestionIndex[currentSection]] = numericalAnswer;
             }
-            selectedAnswers[currentSection][sectionQuestionIndex[currentSection]] = selectedOption.value;
         } else {
-            // If no option is selected, mark it as unanswered
-            if (selectedAnswers[currentSection]) {
-                selectedAnswers[currentSection][sectionQuestionIndex[currentSection]] = null; // Clear any previous answer
+            // For Section 1, save MCQ answers as before
+            const selectedOption = document.querySelector(`input[name="option${sectionQuestionIndex[currentSection]}"]:checked`);
+    
+            if (selectedOption) {
+                if (!selectedAnswers[currentSection]) {
+                    selectedAnswers[currentSection] = {};
+                }
+                selectedAnswers[currentSection][sectionQuestionIndex[currentSection]] = selectedOption.value;
             }
         }
-        
-        // Update the palette items after saving
+    
         updatePaletteItems();
     }
+    
 
     function markforreviewAndNextQuestion() {
         saveCurrentQuestion();
@@ -418,36 +424,50 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateQuestionDisplay() {
         const currentQuestionData = sectionData[currentSection][sectionQuestionIndex[currentSection]];
-
         document.getElementById('q1').src = currentQuestionData.url;
         document.getElementById('question-title').textContent = `Question no. ${sectionQuestionIndex[currentSection] + 1}`;
-
+    
         const optionsContainer = document.querySelector('.answers');
-        optionsContainer.innerHTML = "";
-
-        currentQuestionData.options.forEach((option, index) => {
-            const label = document.createElement('label');
-            label.innerHTML = `
-                <input type="radio" name="option${sectionQuestionIndex[currentSection]}" value="${option}">
-                ${option}
-            `;
-            optionsContainer.appendChild(label);
-        });
-
-        if (selectedAnswers[currentSection] && selectedAnswers[currentSection][sectionQuestionIndex[currentSection]] !== undefined) {
-            const selectedValue = selectedAnswers[currentSection][sectionQuestionIndex[currentSection]];
-            const selectedInput = document.querySelector(`input[name="option${sectionQuestionIndex[currentSection]}"][value="${selectedValue}"]`);
-            if (selectedInput) {
-                selectedInput.checked = true;
+        optionsContainer.innerHTML = "";  // Clear previous content
+    
+        if (currentSection.includes("Sec2")) {
+            // For Section 2, show a numerical input field
+            const inputField = document.createElement('input');
+            inputField.type = 'number';
+            inputField.id = 'numerical-answer';
+            inputField.style.width = "200px";  // Increase the size of the input field
+            inputField.style.height = "40px";  // Adjust height
+            inputField.placeholder = 'Enter your answer';
+    
+            if (selectedAnswers[currentSection] && selectedAnswers[currentSection][sectionQuestionIndex[currentSection]] !== undefined) {
+                inputField.value = selectedAnswers[currentSection][sectionQuestionIndex[currentSection]];
+            }
+    
+            optionsContainer.appendChild(inputField);
+        } else {
+            // For Section 1, display MCQs as usual
+            currentQuestionData.options.forEach((option, index) => {
+                const label = document.createElement('label');
+                label.innerHTML = `<input type="radio" name="option${sectionQuestionIndex[currentSection]}" value="${option}"> ${option}`;
+                optionsContainer.appendChild(label);
+            });
+    
+            if (selectedAnswers[currentSection] && selectedAnswers[currentSection][sectionQuestionIndex[currentSection]] !== undefined) {
+                const selectedValue = selectedAnswers[currentSection][sectionQuestionIndex[currentSection]];
+                const selectedInput = document.querySelector(`input[name="option${sectionQuestionIndex[currentSection]}"][value="${selectedValue}"]`);
+                if (selectedInput) {
+                    selectedInput.checked = true;
+                }
             }
         }
-
+    
         if (quizSubmitted) {
-            showResults(); // Show results when navigating after submission
+            showResults();  // Show results after submission
         }
-
+    
         updatePaletteItems();
     }
+    
 
     function switchSection(section) {
         if (sectionData.hasOwnProperty(section)) {
@@ -537,40 +557,69 @@ document.addEventListener('DOMContentLoaded', function () {
     function showResults() {
         const currentQuestionData = sectionData[currentSection][sectionQuestionIndex[currentSection]];
         const correctAnswer = currentQuestionData.correctAnswer;
-
-        const options = document.querySelectorAll(`input[name="option${sectionQuestionIndex[currentSection]}"]`);
-
-        options.forEach(option => {
-            const parentLabel = option.parentElement;
-            if (option.value === correctAnswer) {
-                parentLabel.style.border = "2px solid green"; // Correct answer in green
-            } else if (option.checked) {
-                parentLabel.style.border = "2px solid red"; // Incorrect answer in red
+    
+        if (currentSection.includes("Sec2")) {
+            // Handle numerical answers for Section 2
+            const userAnswer = document.getElementById('numerical-answer').value.trim(); // Get user's answer and trim spaces
+    
+            if (userAnswer) {
+                if (parseFloat(userAnswer) === correctAnswer) {
+                    // Correct answer, show in green
+                    document.getElementById('numerical-answer').style.border = "2px solid green";
+                } else {
+                    // Incorrect answer, show in red
+                    document.getElementById('numerical-answer').style.border = "2px solid red";
+                }
             }
-        });
+        } else {
+            // Handle MCQs for Section 1
+            const options = document.querySelectorAll(`input[name="option${sectionQuestionIndex[currentSection]}"]`);
+    
+            options.forEach(option => {
+                const parentLabel = option.parentElement;
+                if (option.value === correctAnswer) {
+                    parentLabel.style.border = "2px solid green"; // Correct answer in green
+                } else if (option.checked) {
+                    parentLabel.style.border = "2px solid red"; // Incorrect answer in red
+                }
+            });
+        }
     }
+    
 
     function calculateMarks() {
         let totalMarks = 0;
         let sectionMarks = {};
-
+    
         Object.keys(sectionData).forEach(section => {
             let sectionTotal = 0;
             sectionData[section].forEach((question, index) => {
                 const correctAnswer = question.correctAnswer;
                 const userAnswer = selectedAnswers[section] ? selectedAnswers[section][index] : null;
-                if (userAnswer === correctAnswer) {
-                    sectionTotal += 4;
-                } else if (userAnswer) {
-                    sectionTotal -= 1;
+    
+                if (section.includes("Sec2")) {
+                    // Handle numerical answers
+                    if (parseFloat(userAnswer) === correctAnswer) {
+                        sectionTotal += 4;  // +4 for correct answer
+                    } else if (userAnswer) {
+                        sectionTotal -= 1;  // -1 for incorrect answer
+                    }
+                } else {
+                    // Handle MCQ answers
+                    if (userAnswer === correctAnswer) {
+                        sectionTotal += 4;  // +4 for correct answer
+                    } else if (userAnswer) {
+                        sectionTotal -= 1;  // -1 for incorrect answer
+                    }
                 }
             });
             sectionMarks[section] = sectionTotal;
             totalMarks += sectionTotal;
         });
-
+    
         return { totalMarks, sectionMarks };
     }
+    
 
     function submitQuiz() {
         quizSubmitted = true;
