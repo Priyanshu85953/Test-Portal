@@ -59,7 +59,7 @@ function handleLogin(event) {
         "jee01": "123",
         "jee02": "124",
         "jee03": "125",
-        "jee04": "126"
+        "jee06": "127"
     };
 
     // Check if the entered username exists in the object and if the password matches
