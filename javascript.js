@@ -1,11 +1,8 @@
+// javascript.js
+
 let totalMinutes = 180; // 180 minutes
 let timeLeft = totalMinutes * 60; // Convert minutes to seconds
 let timerId;
-
-// Check if there is a saved time in localStorage
-if (localStorage.getItem('timeLeft')) {
-    timeLeft = parseInt(localStorage.getItem('timeLeft'), 10);
-}
 
 // Function to start the timer
 function startTimer() {
@@ -16,13 +13,9 @@ function startTimer() {
         // Display the timer
         document.getElementById('time_left').innerHTML = `Time Left: ${minutes}m ${seconds < 10 ? '0' : ''}${seconds}s`;
 
-        // Save the time left in localStorage every second
-        localStorage.setItem('timeLeft', timeLeft);
-
         if (timeLeft <= 0) {
             clearInterval(timerId);
             autoSubmit();
-            localStorage.removeItem('timeLeft'); // Clear storage after submission
         }
 
         timeLeft--;
@@ -32,7 +25,6 @@ function startTimer() {
 // Function to stop the timer and submit
 function stopTimer() {
     clearInterval(timerId);
-    localStorage.removeItem('timeLeft'); // Remove time when the test is submitted
 }
 
 // Function to handle auto submission
@@ -48,7 +40,6 @@ window.onload = startTimer;
 document.getElementById('submit').onclick = function() {
     stopTimer();
 };
-
 
 // Login handler (assuming there's a login form)
 function handleLogin(event) {
@@ -202,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
     for (let i = 1; i <= 20; i++) {
         sectionData.mathsSec1.push({
             questionNumber: i,
-            url: generateUrl('matrices%20and%20determinant%20mains%20test', i),
+            url: generateUrl('magnetism%20mains%20test', i),
             options: ["A", "B", "C", "D"],
             correctAnswer: [/*1*/ "C",
                             /*2*/ "C",
