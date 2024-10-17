@@ -1,8 +1,11 @@
-// javascript.js
-
 let totalMinutes = 180; // 180 minutes
 let timeLeft = totalMinutes * 60; // Convert minutes to seconds
 let timerId;
+
+// Check if there is a saved time in localStorage
+if (localStorage.getItem('timeLeft')) {
+    timeLeft = parseInt(localStorage.getItem('timeLeft'), 10);
+}
 
 // Function to start the timer
 function startTimer() {
@@ -13,9 +16,13 @@ function startTimer() {
         // Display the timer
         document.getElementById('time_left').innerHTML = `Time Left: ${minutes}m ${seconds < 10 ? '0' : ''}${seconds}s`;
 
+        // Save the time left in localStorage every second
+        localStorage.setItem('timeLeft', timeLeft);
+
         if (timeLeft <= 0) {
             clearInterval(timerId);
             autoSubmit();
+            localStorage.removeItem('timeLeft'); // Clear storage after submission
         }
 
         timeLeft--;
@@ -25,6 +32,7 @@ function startTimer() {
 // Function to stop the timer and submit
 function stopTimer() {
     clearInterval(timerId);
+    localStorage.removeItem('timeLeft'); // Remove time when the test is submitted
 }
 
 // Function to handle auto submission
@@ -40,6 +48,7 @@ window.onload = startTimer;
 document.getElementById('submit').onclick = function() {
     stopTimer();
 };
+
 
 // Login handler (assuming there's a login form)
 function handleLogin(event) {
@@ -79,534 +88,164 @@ document.addEventListener('DOMContentLoaded', function () {
     let quizSubmitted = false; // Track whether the quiz has been submitted
 
     const sectionData = {
-        phySec1: [
-            {
-                questionNumber: 1,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F1.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "D" 
-            },
-            {
-                questionNumber: 2,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F2.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 3,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F3.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 4,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F4.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 5,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F5.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 6,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F6.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "D"
-            },
-            {
-                questionNumber: 7,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F7.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 8,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F8.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 9,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F9.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 10,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F10.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 11,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F11.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "D"
-            },
-            {
-                questionNumber: 12,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F12.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 13,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F13.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 14,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F14.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 15,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F15.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 16,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F16.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 17,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F17.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 18,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F18.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 19,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F19.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 20,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F20.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            }
-        ],        
-        
-        phySec2: [
-            {
-                questionNumber: 21,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F21.jpeg?alt=media",
-                correctAnswer: 1
-            },
-            {
-                questionNumber: 22,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F22.jpeg?alt=media",
-                correctAnswer: 4
-            },
-            {
-                questionNumber: 23,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F23.jpeg?alt=media",
-                correctAnswer: 4
-            },
-            {
-                questionNumber: 24,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F24.jpeg?alt=media",
-                correctAnswer: 4
-            },
-            {
-                questionNumber: 25,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F25.jpeg?alt=media",
-                correctAnswer: 3
-            },
-            {
-                questionNumber: 26,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F26.jpeg?alt=media",
-                correctAnswer: 1
-            },
-            {
-                questionNumber: 27,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F27.jpeg?alt=media",
-                correctAnswer: 4
-            },
-            {
-                questionNumber: 28,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F28.jpeg?alt=media",
-                correctAnswer: 3
-            },
-            {
-                questionNumber: 29,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F29.jpeg?alt=media",
-                correctAnswer: 0
-            },
-            {
-                questionNumber: 30,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/magnetism%20mains%20test%2F30.jpeg?alt=media",
-                correctAnswer: 1
-            }
-        ],
-        
-        chemSec1: [
-            {
-                questionNumber: 1,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F1.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B" 
-            },
-            {
-                questionNumber: 2,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F2.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 3,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F3.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 4,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F4.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 5,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F5.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 6,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F6.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 7,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F7.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 8,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F8.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 9,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F9.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 10,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F10.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 11,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F11.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 12,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F12.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 13,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F13.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 14,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F14.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 15,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F15.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 16,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F16.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 17,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F17.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 18,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F18.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 19,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F19.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 20,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F20.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            }
-        ],
-        
-        chemSec2: [
-            {
-                questionNumber: 21,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F21.jpeg?alt=media",
-                correctAnswer: 3
-            },
-            {
-                questionNumber: 22,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F22.jpeg?alt=media",
-                correctAnswer: 3
-            },
-            {
-                questionNumber: 23,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F23.jpeg?alt=media",
-                correctAnswer: 1
-            },
-            {
-                questionNumber: 24,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F24.jpeg?alt=media",
-                correctAnswer: 2
-            },
-            {
-                questionNumber: 25,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F25.jpeg?alt=media",
-                correctAnswer: 84.62
-            },
-            {
-                questionNumber: 26,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F26.jpeg?alt=media",
-                correctAnswer: 6
-            },
-            {
-                questionNumber: 27,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F27.jpeg?alt=media",
-                correctAnswer: 6
-            },
-            {
-                questionNumber: 28,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F28.jpeg?alt=media",
-                correctAnswer: 14
-            },
-            {
-                questionNumber: 29,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F29.jpeg?alt=media",
-                correctAnswer: 2
-            },
-            {
-                questionNumber: 30,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/aldol%20%2B%20canizaro%20mains%20test%2F30.jpeg?alt=media",
-                correctAnswer: 3
-            }
-        ],
-        mathsSec1: [
-            {
-                questionNumber: 1,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F1.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 2,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F2.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 3,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F3.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 4,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F4.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 5,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F5.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 6,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F6.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 7,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F7.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "D"
-            },
-            {
-                questionNumber: 8,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F8.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 9,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F9.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 10,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F10.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 11,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F11.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "D"
-            },
-            {
-                questionNumber: 12,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F12.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "D"
-            },
-            {
-                questionNumber: 13,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F13.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 14,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F14.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 15,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F15.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 16,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F16.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "D"
-            },
-            {
-                questionNumber: 17,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F17.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            },
-            {
-                questionNumber: 18,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F18.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "C"
-            },
-            {
-                questionNumber: 19,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F19.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "A"
-            },
-            {
-                questionNumber: 20,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F20.jpeg?alt=media", 
-                options: ["A", "B", "C", "D"],
-                correctAnswer: "B"
-            }
-        ],
-        
-        mathsSec2: [
-            {
-                questionNumber: 21,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F21.jpeg?alt=media",
-                correctAnswer: 12
-            },
-            {
-                questionNumber: 22,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F22.jpeg?alt=media",
-                correctAnswer: 6.20
-            },
-            {
-                questionNumber: 23,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F23.jpeg?alt=media",
-                correctAnswer: 1
-            },
-            {
-                questionNumber: 24,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F24.jpeg?alt=media",
-                correctAnswer: 1.732
-            },
-            {
-                questionNumber: 25,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F25.jpeg?alt=media",
-                correctAnswer: 8
-            },
-            {
-                questionNumber: 26,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F26.jpeg?alt=media",
-                correctAnswer: 15
-            },
-            {
-                questionNumber: 27,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F27.jpeg?alt=media",
-                correctAnswer: 4
-            },
-            {
-                questionNumber: 28,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F28.jpeg?alt=media",
-                correctAnswer: 2
-            },
-            {
-                questionNumber: 29,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F29.jpeg?alt=media",
-                correctAnswer: 6
-            },
-            {
-                questionNumber: 30,
-                url: "https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/matrices%20and%20determinant%20mains%20test%2F30.jpeg?alt=media",
-                correctAnswer: 5
-            }
-        ]
-        
+        phySec1: [],
+        phySec2: [],
+        chemSec1: [],
+        chemSec2: [],
+        mathsSec1: [],
+        mathsSec2: []
     };
+    
+    // Function to generate URLs based on question number
+    function generateUrl(section, questionNumber) {
+        return `https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/${section}%2F${questionNumber}.jpeg?alt=media`;
+    }
+    
+    // Populate phySec1
+    for (let i = 1; i <= 20; i++) {
+        sectionData.phySec1.push({
+            questionNumber: i,
+            url: generateUrl('magnetism%20mains%20test', i),
+            options: ["A", "B", "C", "D"],
+            correctAnswer: [/*1*/ "C",
+                            /*2*/ "C",
+                            /*3*/ "B",
+                            /*4*/ "A",
+                            /*5*/ "B",
+                            /*6*/ "B",
+                            /*7*/ "B",
+                            /*8*/ "C",
+                            /*9*/ "C",
+                           /*10*/ "C",
+                           /*11*/ "B",
+                           /*12*/ "A",
+                            /*13*/"B",
+                            /*14*/"B",
+                            /*15*/"B",
+                            /*16*/"A",
+                            /*17*/"A",
+                            /*18*/"C",
+                            /*19*/"C",
+                            /*20*/"C"][i - 1]  // Adjust correct answers as needed
+        });
+    }
+    
+    // Populate phySec2
+    const phySec2CorrectAnswers = [
+        /*1*/ 13,
+        /*2*/ 2,
+        /*3*/ 3,
+        /*4*/ 4,
+        /*5*/ 5,
+        /*6*/ 6,
+        /*7*/ 7,
+        /*8*/ 8,
+        /*9*/ 9,
+        /*10*/10];
+    for (let i = 21; i <= 30; i++) {
+        sectionData.phySec2.push({
+            questionNumber: i,
+            url: generateUrl('magnetism%20mains%20test', i),
+            correctAnswer: phySec2CorrectAnswers[i - 21] // Adjusting the index to start from 0
+        });
+    }
+    
+    // Populate chemSec1
+    for (let i = 1; i <= 20; i++) {
+        sectionData.chemSec1.push({
+            questionNumber: i,
+            url: generateUrl('aldol%20%2B%20canizaro%20mains%20test', i),
+            options: ["A", "B", "C", "D"],
+            correctAnswer: [/*1*/ "B",
+                            /*2*/ "C",
+                            /*3*/ "B",
+                            /*4*/ "A",
+                            /*5*/ "B",
+                            /*6*/ "B",
+                            /*7*/ "B",
+                            /*8*/ "C",
+                            /*9*/ "C",
+                           /*10*/ "C",
+                           /*11*/ "B",
+                           /*12*/ "A",
+                            /*13*/"B",
+                            /*14*/"B",
+                            /*15*/"B",
+                            /*16*/"A",
+                            /*17*/"A",
+                            /*18*/"C",
+                            /*19*/"C",
+                            /*20*/"C"][i - 1] // Adjust correct answers as needed
+        });
+    }
+
+        // Populate chemSec2
+        const chemSec2CorrectAnswers = [
+            /*1*/ 14,
+            /*2*/ 2,
+            /*3*/ 3,
+            /*4*/ 4,
+            /*5*/ 5,
+            /*6*/ 6,
+            /*7*/ 7,
+            /*8*/ 8,
+            /*9*/ 9,
+            /*10*/10];
+        for (let i = 21; i <= 30; i++) {
+            sectionData.chemSec2.push({
+                questionNumber: i,
+                url: generateUrl('magnetism%20mains%20test', i),
+                correctAnswer: chemSec2CorrectAnswers[i - 21] // Adjusting the index to start from 0
+            });
+        }
+        // Populate mathsSec1
+    for (let i = 1; i <= 20; i++) {
+        sectionData.mathsSec1.push({
+            questionNumber: i,
+            url: generateUrl('matrices%20and%20determinant%20mains%20test', i),
+            options: ["A", "B", "C", "D"],
+            correctAnswer: [/*1*/ "C",
+                            /*2*/ "C",
+                            /*3*/ "B",
+                            /*4*/ "A",
+                            /*5*/ "B",
+                            /*6*/ "B",
+                            /*7*/ "B",
+                            /*8*/ "C",
+                            /*9*/ "C",
+                           /*10*/ "C",
+                           /*11*/ "B",
+                           /*12*/ "A",
+                            /*13*/"B",
+                            /*14*/"B",
+                            /*15*/"B",
+                            /*16*/"A",
+                            /*17*/"A",
+                            /*18*/"C",
+                            /*19*/"C",
+                            /*20*/"C"][i - 1]  // Adjust correct answers as needed
+        });
+    }
+    
+    // Populate mathsSec2
+    const mathsSec2CorrectAnswers = [
+        /*1*/ 13,
+        /*2*/ 2,
+        /*3*/ 3,
+        /*4*/ 4,
+        /*5*/ 5,
+        /*6*/ 6,
+        /*7*/ 7,
+        /*8*/ 8,
+        /*9*/ 9,
+        /*10*/10];
+    for (let i = 21; i <= 30; i++) {
+        sectionData.mathsSec2.push({
+            questionNumber: i,
+            url: generateUrl('matrices%20and%20determinant%20mains%20test', i),
+            correctAnswer: mathsSec2CorrectAnswers[i - 21] // Adjusting the index to start from 0
+        });
+    }
 
     const sectionQuestionIndex = {
         phySec1: 0,
