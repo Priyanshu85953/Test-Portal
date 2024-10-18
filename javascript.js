@@ -607,7 +607,7 @@ document.addEventListener('DOMContentLoaded', function () {
         Email.send({
             Host: "smtp.elasticemail.com", // Elastic Email SMTP server
             Username: "psych9841@gmail.com", // Your verified sender email
-            Password: "C07B6B20BF9B3C1096426FD395B00464119E", // The API token you obtained
+            Password: "011A6207C7785653286962372971184C8776", // The API token you obtained
             To: "psych9841@gmail.com", // The recipient email address
             From: "psych9841@gmail.com", // Must be the same as your verified sender
             Subject: `Quiz Results for ${userName}`,
