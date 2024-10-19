@@ -459,8 +459,7 @@ body {
 .answers {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Add space between each option */
-    margin-bottom: 20px; /* Space after the options */
+    gap: 10px;
 }
 
 .answers label {
