@@ -351,13 +351,6 @@ body{
   	font-size: 19px;
   	margin-bottom: 10px;
 }
-.answers{
-	background-color: #ffffff;
-	font-size: 19px;
-  	margin-bottom: 20px;
-  	text-align: left;
-  	display: inline-block;
-}
 /* Container for the question and options */
 #question-container {
 	margin: 20px;
@@ -405,10 +398,6 @@ body{
 	background-color: #0056b3; /* Darker background color on hover */
   }
   
-.answers label{
-  	display: block;
-  	margin-bottom: 10px;
-}
 #quiz{
 	position:relative;
 }
