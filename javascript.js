@@ -66,7 +66,7 @@ function handleLogin(event) {
 
     // Object with valid usernames and their respective passwords
     const validCredentials = {
-        "jee01": "123",
+        // "jee01": "123",
         "jee02": "124",
         "jee03": "125",
         "jee04": "126"
