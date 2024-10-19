@@ -132,12 +132,10 @@ body{
     font-family: Tahoma, Geneva, sans-serif;
     padding: 2px 20px 2px 0px;
 }
-#question_area_scrollable {
-    background-image: url("download.png");
-    overflow-y: auto;  /* Use auto to adapt scrolling behavior to both Mac and Windows */
+#question_area_scrollable{
+	background-image: url("download.png");
+    overflow-y: scroll;
     height: 512px;
-    padding-right: 15px;  /* Adds padding to prevent content from being cut off */
-    box-sizing: border-box;  /* Ensures padding is included in the element's width/height */
 }
 .question-title{
 	border-bottom: 1px solid #dbdbdb;
