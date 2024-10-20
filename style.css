@@ -135,7 +135,7 @@ body{
 #question_area_scrollable{
 	background-image: url("download.png");
     overflow-y: scroll;
-    height: 512px;
+    height: 500px;
 }
 .question-title{
 	border-bottom: 1px solid #dbdbdb;
